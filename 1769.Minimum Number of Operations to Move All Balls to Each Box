@@ -1,0 +1,27 @@
+1769. Minimum Number of Operations to Move All Balls to Each Box
+code solution:
+#python
+class Solution:
+    def minOperations(self, boxes: str) -> List[int]:
+        n = len(boxes)
+        result = [0] * n
+        left_count, left_cost = 0, 0
+        right_count, right_cost = 0, 0
+
+    # First pass: Calculate operations from the left
+        for i in range(n):
+            result[i] += left_cost
+            if boxes[i] == '1':
+                left_count += 1
+            left_cost += left_count
+
+    # Second pass: Calculate operations from the right
+        for i in range(n - 1, -1, -1):
+            result[i] += right_cost
+            if boxes[i] == '1':
+                right_count += 1
+            right_cost += right_count
+
+        return result
+Runtime:7ms
+Beats:89.20%
