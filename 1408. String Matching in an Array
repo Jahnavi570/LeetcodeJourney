@@ -1,0 +1,14 @@
+1408. String Matching in an Array
+python solution:
+class Solution:
+    def stringMatching(self, words: List[str]) -> List[str]:
+        l=[]
+        for i, word in enumerate(words):
+            for j, other in enumerate(words):
+                if i != j and word in other:  
+                    l.append(word)
+                    break 
+        return l
+Runtime:3ms
+Beats:64.01%
+
