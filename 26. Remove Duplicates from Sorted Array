@@ -1,0 +1,39 @@
+26. Remove Duplicates from Sorted Array
+Code:
+#Python3
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        if len(nums)==0:
+            print("[]")
+            return 0
+        index=0
+        for i in range(1,len(nums)):
+            if nums[i]!=nums[index] :
+                index+=1
+                nums[index]=nums[i]
+        return index+1
+Runtime:2ms
+Beats:55.39%
+
+Code
+//Java
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        
+        int index = 0;
+        
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != nums[index]) {
+                index++;
+                nums[index] = nums[i];
+            }
+        }
+        
+        return index + 1; // Return the length of the resulting array
+    }
+}
+Runtime:0ms
+Beats:100.00%
