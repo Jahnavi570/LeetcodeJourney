@@ -1,0 +1,14 @@
+1400. Construct K Palindrome Strings
+code:
+#python
+class Solution:
+    def canConstruct(self, s: str, k: int) -> bool:
+        if k>len(s):
+            return False
+        charcount={}
+        for i in s:
+            charcount[i]=charcount.get(i,0)+1
+        oddcount=sum(1 for freq in charcount.values() if freq %2==1)
+        return oddcount<=k
+Runtime:51ms
+Beats:25.11%
