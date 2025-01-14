@@ -1,0 +1,27 @@
+2657. Find the Prefix Common Array of Two Arrays
+code:
+#python
+class Solution:
+    def findThePrefixCommonArray(self, A: List[int], B: List[int]) -> List[int]:
+        seen = set()  # To store elements seen in A and B
+        result = []
+        count = 0  # Number of common elements found so far
+
+        for a, b in zip(A, B):
+            # Add the current elements to the set
+            if a in seen:
+                count += 1
+            else:
+                seen.add(a)
+
+            if b in seen:
+                count += 1
+            else:
+                seen.add(b)
+
+            # Append the count to the result
+            result.append(count)
+        
+        return result
+Runtime:0ms
+Beats:100.00%
