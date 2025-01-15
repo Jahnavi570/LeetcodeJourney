@@ -1,0 +1,23 @@
+2429. Minimize XOR
+code:
+#python
+class Solution:
+    def minimizeXor(self, num1: int, num2: int) -> int:
+        num_set_bits = bin(num2).count("1")
+        x = 0
+        for i in range(31, -1, -1):
+            if num_set_bits == 0:
+                break
+            if num1 & (1 << i):
+                x |= 1 << i
+                num_set_bits -= 1
+        for i in range(32):
+            if num_set_bits == 0:  # If no more set bits are needed, stop
+                break
+            if not (x & (1 << i)):
+                x |= 1 << i  # Set the i-th bit of x
+                num_set_bits -= 1  # Decrement the count of needed set bits
+
+        return x
+Runtime:2ms
+Beats:22.40%
