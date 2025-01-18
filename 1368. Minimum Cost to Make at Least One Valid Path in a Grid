@@ -1,0 +1,38 @@
+1368. Minimum Cost to Make at Least One Valid Path in a Grid
+code:
+#python
+class Solution:
+    def minCost(self, grid: List[List[int]]) -> int:
+        rows, cols = len(grid), len(grid[0])
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]  # right, left, down, up
+        cost = [[float('inf')] * cols for _ in range(rows)]  # Cost array
+        cost[0][0] = 0
+        deque_bfs = deque([(0, 0, 0)])  # (current_cost, row, col)
+
+        while deque_bfs:
+            cur_cost, r, c = deque_bfs.popleft()
+
+            # Skip if we already have a cheaper cost for this cell
+            if cur_cost > cost[r][c]:
+                continue
+
+            # Check all 4 possible directions
+            for i, (dr, dc) in enumerate(directions):
+                nr, nc = r + dr, c + dc
+
+                # Stay within grid bounds
+                if 0 <= nr < rows and 0 <= nc < cols:
+                    # Calculate new cost
+                    new_cost = cur_cost + (1 if grid[r][c] != i + 1 else 0)
+                    
+                    # Update cost if new_cost is better
+                    if new_cost < cost[nr][nc]:
+                        cost[nr][nc] = new_cost
+                        if grid[r][c] == i + 1:
+                            deque_bfs.appendleft((new_cost, nr, nc))  # Priority to 0-cost moves
+                        else:
+                            deque_bfs.append((new_cost, nr, nc))  # Add 1-cost moves to the back
+
+        return cost[rows - 1][cols - 1]
+Runtime:87ms
+Beats:92.53%
