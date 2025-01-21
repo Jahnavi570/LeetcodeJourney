@@ -1,0 +1,28 @@
+2017. Grid Game
+code:
+#python
+from typing import List
+
+class Solution:
+    def gridGame(self, grid: List[List[int]]) -> int:
+        # Initialize prefix sums for both rows
+        top_sum = sum(grid[0])
+        bottom_sum = 0
+        min_score = float('inf')
+        
+        # Iterate through the columns
+        for c in range(len(grid[0])):
+            # Remove the current column from the top row sum
+            top_sum -= grid[0][c]
+            
+            # Calculate the maximum score the second robot can get
+            max_second_robot = max(top_sum, bottom_sum)
+            min_score = min(min_score, max_second_robot)
+            
+            # Add the current column to the bottom row sum
+            bottom_sum += grid[1][c]
+        
+        return min_score
+Runtime:84ms
+Beats:79.34%
+
