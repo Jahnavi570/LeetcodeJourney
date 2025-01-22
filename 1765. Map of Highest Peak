@@ -1,0 +1,33 @@
+1765. Map of Highest Peak
+code:
+#python
+class Solution:
+    def highestPeak(self, isWater: List[List[int]]) -> List[List[int]]:
+        rows, cols = len(isWater), len(isWater[0])
+        heights = [[-1] * cols for _ in range(rows)]  # Initialize all heights to -1
+        queue = deque()  # Queue for BFS
+        
+        # Step 1: Initialize the queue with all water cells
+        for r in range(rows):
+            for c in range(cols):
+                if isWater[r][c] == 1:
+                    heights[r][c] = 0  # Water cells have height 0
+                    queue.append((r, c))
+        
+        # Step 2: Perform BFS to calculate heights
+        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # Four possible moves
+        while queue:
+            r, c = queue.popleft()
+            current_height = heights[r][c]
+            
+            # Explore all 4 neighbors
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
+                # Check bounds and if the cell is unvisited
+                if 0 <= nr < rows and 0 <= nc < cols and heights[nr][nc] == -1:
+                    heights[nr][nc] = current_height + 1  # Set the height
+                    queue.append((nr, nc))  # Add to the queue
+        
+        return heights
+Runtime:680ms
+Beats:85.41%
