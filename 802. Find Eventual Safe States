@@ -1,0 +1,25 @@
+802. Find Eventual Safe States
+code:
+#python
+from typing import List
+
+class Solution:
+    def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
+        n = len(graph)
+        color = [0] * n  # 0 = unvisited, 1 = visiting, 2 = safe
+
+        def dfs(node):
+            if color[node] > 0:
+                return color[node] == 2  # Return True if the node is safe
+            color[node] = 1  # Mark as visiting
+            for neighbor in graph[node]:
+                if color[neighbor] == 2:  # Skip if neighbor is safe
+                    continue
+                if color[neighbor] == 1 or not dfs(neighbor):  # Cycle detected
+                    return False
+            color[node] = 2  # Mark as safe
+            return True
+
+        return [i for i in range(n) if dfs(i)]
+Runtime:16ms
+Beats:98.05%
